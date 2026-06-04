@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eastern Sierra 395 — Passes &amp; 14ers Field Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --granite:#15191e;
+    --granite-2:#1b2026;
+    --card:#1d232a;
+    --card-edge:#2c343d;
+    --ink:#ece6da;
+    --ink-soft:#a9a799;
+    --ink-faint:#6f7066;
+    --alpenglow:#dd8a45;
+    --alpenglow-bright:#f0a85d;
+    --glacier:#6fb3b8;
+    --easy:#84a96b;
+    --moderate:#d8a64a;
+    --hard:#dd8a45;
+    --brutal:#c8584a;
+    --line:rgba(236,230,218,.09);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Spectral',Georgia,serif;
+    background:var(--granite);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* topographic contour backdrop */
+  .topo{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:.5;
+  }
+  .topo svg{width:100%;height:100%}
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 22px 90px}
+
+  /* ---------- HEADER ---------- */
+  header{padding:64px 0 30px;position:relative}
+  .kicker{
+    font-family:'Spectral',serif;font-style:italic;font-size:1.02rem;
+    letter-spacing:.04em;color:var(--alpenglow-bright);margin-bottom:10px;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(2.5rem,6.5vw,4.6rem);line-height:.98;
+    letter-spacing:-.015em;color:var(--ink);
+  }
+  h1 em{font-style:italic;color:var(--alpenglow);font-weight:500}
+  .sub{
+    margin-top:18px;max-width:62ch;color:var(--ink-soft);
+    font-size:1.06rem;font-weight:300;
+  }
+  .ridge{margin:26px 0 0;display:block;width:100%;height:54px}
+
+  /* ---------- PROGRESS ---------- */
+  .dash{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:34px 0 12px;
+  }
+  @media(max-width:620px){.dash{grid-template-columns:1fr}}
+  .meter{
+    background:var(--card);border:1px solid var(--card-edge);border-radius:14px;
+    padding:20px 22px;position:relative;overflow:hidden;
+  }
+  .meter h3{
+    font-family:'Spectral',serif;font-weight:500;font-style:italic;
+    font-size:.95rem;color:var(--ink-soft);letter-spacing:.03em;text-transform:none;
+  }
+  .meter .count{font-family:'Fraunces',serif;font-size:2.5rem;line-height:1;margin-top:6px}
+  .meter .count b{color:var(--alpenglow-bright);font-weight:600}
+  .meter .count span{color:var(--ink-faint);font-size:1.4rem}
+  .bar{height:7px;border-radius:6px;background:rgba(255,255,255,.06);margin-top:16px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--alpenglow),var(--alpenglow-bright));border-radius:6px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .meter.peaks .bar i{background:linear-gradient(90deg,var(--glacier),#9fd0d3)}
+  .meter.peaks .count b{color:#9fd0d3}
+
+  /* ---------- SECTION ---------- */
+  section{margin-top:54px}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:8px}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.6rem,3.5vw,2.3rem);letter-spacing:-.01em}
+  h2 .n{color:var(--alpenglow);font-style:italic;font-weight:500;font-size:.8em;margin-right:.35em}
+  .sortbar{display:flex;gap:6px;flex-wrap:wrap}
+  .sortbar button{
+    font-family:'Spectral',serif;font-size:.82rem;color:var(--ink-soft);
+    background:transparent;border:1px solid var(--card-edge);
+    padding:6px 13px;border-radius:20px;cursor:pointer;transition:.18s;letter-spacing:.02em;
+  }
+  .sortbar button:hover{color:var(--ink);border-color:var(--alpenglow)}
+  .sortbar button.on{background:var(--alpenglow);color:#1a1207;border-color:var(--alpenglow);font-weight:500}
+
+  /* ---------- ITEM ---------- */
+  .list{margin-top:18px;display:flex;flex-direction:column;gap:11px}
+  .item{
+    display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+    background:var(--card);border:1px solid var(--card-edge);border-radius:13px;
+    padding:15px 18px;transition:border-color .2s,transform .2s,opacity .3s;
+  }
+  .item:hover{border-color:#3a444f}
+  .item.done{opacity:.5}
+  .item.done .name{text-decoration:line-through;text-decoration-color:var(--ink-faint)}
+
+  /* checkbox */
+  .chk{appearance:none;-webkit-appearance:none;min-width:26px;height:26px;border-radius:8px;
+    border:1.5px solid #475360;background:transparent;cursor:pointer;position:relative;transition:.18s;flex:none}
+  .chk:hover{border-color:var(--alpenglow)}
+  .chk:checked{background:var(--alpenglow);border-color:var(--alpenglow)}
+  .chk:checked::after{content:"";position:absolute;left:8px;top:3px;width:6px;height:12px;border:solid #1a1207;border-width:0 2.5px 2.5px 0;transform:rotate(43deg)}
+  .peaks-list .chk:checked{background:var(--glacier);border-color:var(--glacier)}
+
+  .mid{min-width:0}
+  .name{font-family:'Fraunces',serif;font-size:1.18rem;font-weight:500;line-height:1.2}
+  .where{color:var(--ink-soft);font-size:.9rem;font-style:italic;margin-top:2px}
+  .stats{display:flex;flex-wrap:wrap;gap:5px 16px;margin-top:8px;font-size:.86rem;color:var(--ink-soft)}
+  .stats b{color:var(--ink);font-weight:500}
+  .stats span{white-space:nowrap}
+
+  .right{display:flex;flex-direction:column;align-items:flex-end;gap:9px;flex:none}
+  .pill{font-family:'Spectral',serif;font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px;white-space:nowrap}
+  .p-easy{background:rgba(132,169,107,.16);color:#a8c98c;border:1px solid rgba(132,169,107,.35)}
+  .p-mod{background:rgba(216,166,74,.15);color:#e2bd6e;border:1px solid rgba(216,166,74,.35)}
+  .p-modhard{background:rgba(221,138,69,.15);color:#eda968;border:1px solid rgba(221,138,69,.35)}
+  .p-hard{background:rgba(221,138,69,.2);color:#f0a85d;border:1px solid rgba(221,138,69,.45)}
+  .p-brutal{background:rgba(200,88,74,.17);color:#e07f72;border:1px solid rgba(200,88,74,.42)}
+  .p-c1{background:rgba(132,169,107,.16);color:#a8c98c;border:1px solid rgba(132,169,107,.35)}
+  .p-c2{background:rgba(216,166,74,.15);color:#e2bd6e;border:1px solid rgba(216,166,74,.35)}
+  .p-c3{background:rgba(221,138,69,.18);color:#eda968;border:1px solid rgba(221,138,69,.4)}
+  .p-c4{background:rgba(200,88,74,.17);color:#e07f72;border:1px solid rgba(200,88,74,.42)}
+  .go{font-family:'Spectral',serif;font-size:.82rem;color:var(--glacier);text-decoration:none;border-bottom:1px solid transparent;transition:.18s}
+  .go:hover{border-color:var(--glacier)}
+  .go::after{content:" \2197"}
+
+  .week{font-family:'Fraunces',serif;font-size:.74rem;color:var(--alpenglow);letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:3px}
+
+  .note{font-size:.92rem;color:var(--ink-soft);font-weight:300;max-width:70ch;margin-top:6px}
+  .note.warn{border-left:2px solid var(--brutal);padding-left:14px;color:#d6a79f}
+  .tier-label{font-family:'Spectral',serif;font-style:italic;color:var(--ink-soft);font-size:.92rem;letter-spacing:.03em;margin:24px 0 2px}
+
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;align-items:center}
+  .btn{font-family:'Spectral',serif;font-size:.86rem;cursor:pointer;border-radius:22px;padding:9px 18px;transition:.18s;background:transparent;color:var(--ink-soft);border:1px solid var(--card-edge)}
+  .btn:hover{color:var(--ink);border-color:var(--alpenglow)}
+  .btn.print:hover{border-color:var(--glacier);color:var(--glacier)}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.84rem;font-weight:300}
+  footer a{color:var(--ink-soft)}
+  .save-tag{font-size:.8rem;color:var(--ink-faint);font-style:italic}
+
+  @media(max-width:560px){
+    .item{grid-template-columns:auto 1fr;gap:13px}
+    .right{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between;width:100%}
+  }
+  @media print{
+    .topo,.tools,.sortbar,.ridge{display:none}
+    body{background:#fff;color:#000}
+    .item,.meter{border:1px solid #bbb;background:#fff;break-inside:avoid}
+    .name,h1,h2{color:#000}
+    .go{color:#555}
+    a[href]::after{content:" (" attr(href) ")";font-size:.7em;color:#777}
+  }
+</style>
+</head>
+<body>
+<div class="topo" aria-hidden="true">
+  <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#ffffff" stroke-width="1">
+    <g opacity="0.05">
+      <path d="M-50,560 C200,500 350,640 600,560 C820,490 980,600 1250,520"/>
+      <path d="M-50,600 C200,545 360,680 600,600 C830,530 990,640 1250,560"/>
+      <path d="M-50,640 C210,590 360,710 600,640 C840,575 1000,675 1250,600"/>
+      <path d="M-50,690 C220,640 370,745 600,690 C850,625 1010,720 1250,650"/>
+      <path d="M-50,470 C240,420 380,540 620,470 C860,405 1000,500 1250,440"/>
+      <path d="M-50,380 C260,340 400,440 640,380 C880,325 1010,410 1250,360"/>
+      <path d="M-50,290 C280,255 420,345 660,290 C900,240 1020,315 1250,275"/>
+      <path d="M-50,200 C300,170 440,250 680,205 C920,160 1030,225 1250,195"/>
+      <path d="M-50,120 C320,95 460,165 700,128 C940,92 1040,148 1250,122"/>
+    </g>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Highway 395 · Bridgeport → south of Lone Pine</div>
+    <h1>The Eastern Sierra<br><em>Crest &amp; Summit</em> Logbook</h1>
+    <p class="sub">A season checklist for the crest-crossing passes and the California fourteeners strung along the east side. Tap a box to log a crossing or a summit — your progress saves in this browser.</p>
+    <svg class="ridge" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="0,58 90,30 150,42 230,8 310,38 380,20 470,46 560,14 640,40 720,24 810,50 880,28 950,44 1000,34" fill="none" stroke="#dd8a45" stroke-width="1.4" opacity="0.7"/>
+    </svg>
+  </header>
+
+  <div class="dash">
+    <div class="meter passes">
+      <h3>Passes crossed</h3>
+      <div class="count"><b id="pCount">0</b><span> / 13</span></div>
+      <div class="bar"><i id="pBar"></i></div>
+    </div>
+    <div class="meter peaks">
+      <h3>Fourteeners summited</h3>
+      <div class="count"><b id="kCount">0</b><span> / 14</span></div>
+      <div class="bar"><i id="kBar"></i></div>
+    </div>
+  </div>
+
+  <section id="passes">
+    <div class="sec-head">
+      <h2><span class="n">I.</span>The Passes</h2>
+      <div class="sortbar" id="passSort">
+        <button data-sort="week" class="on">Season plan</button>
+        <button data-sort="difficulty">By difficulty</button>
+        <button data-sort="length">By length</button>
+        <button data-sort="ns">North → South</button>
+      </div>
+    </div>
+    <p class="note">Distances are round-trip to the pass. Most are day-hikeable without a permit; overnight needs a wilderness permit. The bottom four — Taboose, Baxter, Sawmill, Shepherd — start on the hot desert floor and gain ~6,000 ft. Treat them with respect: pre-dawn starts, extra water.</p>
+    <div class="list" id="passList"></div>
+  </section>
+
+  <section id="peaks">
+    <div class="sec-head">
+      <h2><span class="n">II.</span>The 14ers</h2>
+      <div class="sortbar" id="peakSort">
+        <button data-sort="tier" class="on">By difficulty</button>
+        <button data-sort="elev">By elevation</button>
+      </div>
+    </div>
+    <p class="note warn">Reality check: only Whitney, Langley, and White Mountain are true hikes. Everything else is mountaineering (Class 2–4) with real exposure and rockfall — build up to these, and rope up on the Palisade spires.</p>
+    <div class="list peaks-list" id="peakList"></div>
+  </section>
+
+  <div class="tools">
+    <button class="btn print" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn" id="resetBtn">Reset all checks</button>
+    <span class="save-tag" id="saveTag"></span>
+  </div>
+
+  <footer>
+    Built as a personal field checklist for the Eastern Sierra Scenic Byway. Stats are approximate and gathered from public trail resources (AllTrails, HikingProject, Wikipedia, USFS) — always verify current conditions, snow, permits, and quotas with the <a href="https://www.fs.usda.gov/inyo">Inyo National Forest</a> before heading out. Not a substitute for a map, judgment, and the ten essentials.
+  </footer>
+</div>
+
+<script>
+const PASSES=[
+ {id:"cottonwood",name:"Cottonwood Pass",where:"Horseshoe Meadows · Lone Pine",rt:"~7 mi",gain:"~1,200 ft",elev:"11,200 ft",diff:"Easy",cls:"p-easy",link:"https://www.alltrails.com/trail/us/california/cottonwood-pass-new-army-pass-loop",week:1,d:1,len:7,ns:13},
+ {id:"morgan",name:"Morgan Pass",where:"Mosquito Flat · Rock Creek",rt:"~8–9.4 mi",gain:"~1,000–1,600 ft",elev:"11,100 ft",diff:"Easy–Mod",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/mosquito-flat-to-morgan-lakes",week:2,d:2,len:8.5,ns:3},
+ {id:"burro",name:"Burro / Summit Pass",where:"Virginia Lakes · Bridgeport",rt:"5.6 mi (10 to Summit Lk)",gain:"1,320–2,510 ft",elev:"11,120 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/virginia-lakes-trail",week:3,d:3,len:5.6,ns:1},
+ {id:"duck",name:"Duck Pass",where:"Coldwater CG · Mammoth Lakes",rt:"~8 mi",gain:"~1,680 ft",elev:"10,800 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/duck-lake-via-emerald-lake-trail",week:4,d:3,len:8,ns:2},
+ {id:"piute",name:"Piute Pass",where:"North Lake · Bishop",rt:"~9.6 mi",gain:"~2,078 ft",elev:"11,423 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/piute-pass-trail",week:5,d:3,len:9.6,ns:5},
+ {id:"kearsarge",name:"Kearsarge Pass",where:"Onion Valley · Independence",rt:"~9.6 mi",gain:"~2,660 ft",elev:"11,760 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/kearsarge-pass-trail-to-kearsarge-lakes",week:6,d:3,len:9.6,ns:10},
+ {id:"bishop",name:"Bishop Pass",where:"South Lake · Bishop",rt:"~12 mi",gain:"~2,150 ft",elev:"11,972 ft",diff:"Mod–Hard",cls:"p-modhard",link:"https://www.alltrails.com/trail/us/california/bishop-pass-trail",week:7,d:4,len:12,ns:6},
+ {id:"mono",name:"Mono Pass (Rock Creek)",where:"Mosquito Flat · Rock Creek",rt:"~9 mi",gain:"~2,280 ft",elev:"12,060 ft",diff:"Mod–Hard",cls:"p-modhard",link:"https://www.alltrails.com/trail/us/california/mono-pass-from-mosquito-flat-trailhead",week:8,d:4,len:9,ns:4},
+ {id:"newarmy",name:"New Army Pass",where:"Cottonwood Lakes · Lone Pine",rt:"~15 mi",gain:"~2,300 ft",elev:"12,300 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/trail/us/california/cottonwood-lake-and-long-lake-via-cottonwood-lakes-and-new-army-pass-trail",week:9,d:5,len:15,ns:12},
+ {id:"taboose",name:"Taboose Pass",where:"Aberdeen · Big Pine",rt:"~16 mi",gain:"~6,000 ft",elev:"11,400 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.alltrails.com/trail/us/california/taboose-pass-to-cardinal-mountain",week:10,d:6,len:16,ns:7},
+ {id:"baxter",name:"Baxter Pass",where:"Oak Creek · Independence",rt:"~16 mi",gain:"~6,300 ft",elev:"12,320 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.mountainproject.com/area/114076816/10-taboose-sawmill-baxter-passes",week:11,d:6,len:16,ns:9},
+ {id:"sawmill",name:"Sawmill Pass",where:"Division Creek · Independence",rt:"~21 mi",gain:"~6,700 ft",elev:"11,347 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.alltrails.com/trail/us/california/sawmill-pass-trail",week:12,d:6,len:21,ns:8},
+ {id:"shepherd",name:"Shepherd Pass",where:"Symmes Creek · Independence",rt:"~21.6 mi",gain:"~6,800 ft",elev:"12,000 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.hikingproject.com/trail/7116808/shepherd-pass-out-and-back",week:13,d:6,len:21.6,ns:11}
+];
+
+const PEAKS=[
+ {id:"whitney",name:"Mount Whitney",elev:14505,info:"~22 mi · Class 1 trail",where:"Whitney Portal · Lone Pine · permit lottery",cls:"p-c1",clsLabel:"Class 1",tier:1},
+ {id:"langley",name:"Mount Langley",elev:14026,info:"~22 mi · Class 1–2",where:"Cottonwood Lakes · Lone Pine",cls:"p-c1",clsLabel:"Class 1–2",tier:1},
+ {id:"whitemtn",name:"White Mountain Peak",elev:14252,info:"~15 mi · Class 1 road",where:"Barcroft gate · Big Pine (White Mtns, not the Sierra)",cls:"p-c1",clsLabel:"Class 1",tier:1},
+ {id:"split",name:"Split Mountain",elev:14058,info:"Class 2 · ~7,500 ft gain",where:"Red Lake · Big Pine",cls:"p-c2",clsLabel:"Class 2",tier:2},
+ {id:"muir",name:"Mount Muir",elev:14012,info:"Class 3 scramble",where:"Spur off the Whitney Trail · Lone Pine",cls:"p-c3",clsLabel:"Class 3",tier:2},
+ {id:"tyndall",name:"Mount Tyndall",elev:14019,info:"Class 2–3",where:"Shepherd Pass · Independence",cls:"p-c3",clsLabel:"Class 2–3",tier:2},
+ {id:"williamson",name:"Mount Williamson",elev:14379,info:"Class 2–3 · 2nd highest in CA",where:"Shepherd Pass / George Creek · Independence",cls:"p-c3",clsLabel:"Class 2–3",tier:2},
+ {id:"russell",name:"Mount Russell",elev:14094,info:"Class 3 · East Ridge",where:"Upper Boy Scout Lake · Lone Pine",cls:"p-c3",clsLabel:"Class 3",tier:2},
+ {id:"sill",name:"Mount Sill",elev:14153,info:"Class 3–4",where:"Big Pine Creek / Palisade Glacier",cls:"p-c4",clsLabel:"Class 3–4",tier:2},
+ {id:"middlepal",name:"Middle Palisade",elev:14012,info:"Class 3 exposed",where:"South Fork Big Pine Creek",cls:"p-c3",clsLabel:"Class 3",tier:2},
+ {id:"northpal",name:"North Palisade",elev:14248,info:"Class 4 · LeConte Route",where:"Big Pine Creek",cls:"p-c4",clsLabel:"Class 4",tier:3},
+ {id:"polemonium",name:"Polemonium Peak",elev:14080,info:"Class 4 · unofficial spire",where:"Big Pine Creek",cls:"p-c4",clsLabel:"Class 4",tier:3},
+ {id:"starlight",name:"Starlight Peak",elev:14200,info:"Class 4 + the \u201cmilk bottle\u201d · unofficial",where:"Big Pine Creek",cls:"p-c4",clsLabel:"Class 4",tier:3},
+ {id:"thunderbolt",name:"Thunderbolt Peak",elev:14003,info:"Class 4–5 summit block · unofficial",where:"Big Pine Creek",cls:"p-c4",clsLabel:"Class 4–5",tier:3}
+];
+
+const KEY="ts395_v1";
+let state={};
+try{ state=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ state={}; }
+function persist(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); document.getElementById('saveTag').textContent="Saved in this browser \u2713"; }catch(e){ document.getElementById('saveTag').textContent="(Progress won't persist in this preview — it will once hosted.)"; } }
+
+function passRow(p,showWeek){
+  const done=!!state[p.id];
+  return `<div class="item ${done?'done':''}" data-id="${p.id}">
+    <input type="checkbox" class="chk" ${done?'checked':''} aria-label="${p.name} crossed">
+    <div class="mid">
+      ${showWeek?`<span class="week">Week ${p.week}</span><br>`:''}
+      <span class="name">${p.name}</span>
+      <div class="where">${p.where}</div>
+      <div class="stats"><span><b>${p.rt}</b> rt</span><span><b>${p.gain}</b> gain</span><span>top <b>${p.elev}</b></span></div>
+    </div>
+    <div class="right">
+      <span class="pill ${p.cls}">${p.diff}</span>
+      <a class="go" href="${p.link}" target="_blank" rel="noopener">Trail</a>
+    </div>
+  </div>`;
+}
+function peakRow(p){
+  const done=!!state[p.id];
+  return `<div class="item ${done?'done':''}" data-id="${p.id}">
+    <input type="checkbox" class="chk" ${done?'checked':''} aria-label="${p.name} summited">
+    <div class="mid">
+      <span class="name">${p.name}</span>
+      <div class="where">${p.where}</div>
+      <div class="stats"><span><b>${p.elev.toLocaleString()} ft</b></span><span>${p.info}</span></div>
+    </div>
+    <div class="right">
+      <span class="pill ${p.cls}">${p.clsLabel}</span>
+    </div>
+  </div>`;
+}
+
+let passMode="week";
+function renderPasses(){
+  let arr=[...PASSES];
+  if(passMode==="difficulty") arr.sort((a,b)=>a.d-b.d||a.len-b.len);
+  else if(passMode==="length") arr.sort((a,b)=>a.len-b.len);
+  else if(passMode==="ns") arr.sort((a,b)=>a.ns-b.ns);
+  else arr.sort((a,b)=>a.week-b.week);
+  document.getElementById('passList').innerHTML=arr.map(p=>passRow(p,passMode==="week")).join('');
+}
+let peakMode="tier";
+const tierNames={1:"Walk-ups \u2014 Class 1\u20132",2:"Scrambles \u2014 Class 2\u20134",3:"Technical \u2014 Class 4\u20135 (rope up)"};
+function renderPeaks(){
+  let html="";
+  if(peakMode==="tier"){
+    [1,2,3].forEach(t=>{
+      const grp=PEAKS.filter(p=>p.tier===t).sort((a,b)=>b.elev-a.elev);
+      html+=`<div class="tier-label">${tierNames[t]}</div>`+grp.map(peakRow).join('');
+    });
+  }else{
+    html=[...PEAKS].sort((a,b)=>b.elev-a.elev).map(peakRow).join('');
+  }
+  document.getElementById('peakList').innerHTML=html;
+}
+
+function updateMeters(){
+  const pc=PASSES.filter(p=>state[p.id]).length;
+  const kc=PEAKS.filter(p=>state[p.id]).length;
+  document.getElementById('pCount').textContent=pc;
+  document.getElementById('kCount').textContent=kc;
+  document.getElementById('pBar').style.width=(pc/PASSES.length*100)+"%";
+  document.getElementById('kBar').style.width=(kc/PEAKS.length*100)+"%";
+}
+
+document.addEventListener('change',e=>{
+  if(e.target.classList.contains('chk')){
+    const id=e.target.closest('.item').dataset.id;
+    state[id]=e.target.checked;
+    e.target.closest('.item').classList.toggle('done',e.target.checked);
+    persist(); updateMeters();
+  }
+});
+document.getElementById('passSort').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  passMode=e.target.dataset.sort;
+  [...e.currentTarget.children].forEach(b=>b.classList.toggle('on',b===e.target));
+  renderPasses();
+});
+document.getElementById('peakSort').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  peakMode=e.target.dataset.sort;
+  [...e.currentTarget.children].forEach(b=>b.classList.toggle('on',b===e.target));
+  renderPeaks();
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  if(confirm("Clear every check?")){ state={}; persist(); renderPasses(); renderPeaks(); updateMeters(); }
+});
+
+renderPasses(); renderPeaks(); updateMeters();
+</script>
+</body>
+</html>
