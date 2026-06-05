@@ -212,8 +212,10 @@
   .photo-ct-link:hover{text-decoration:underline}
   .photo-rm{font-family:'Spectral',serif;font-size:.75rem;background:transparent;border:none;color:var(--ink-faint);cursor:pointer;padding:2px 0}
   .photo-rm:hover{color:#e55}
+  #kmzBtn{background:var(--alpenglow);color:#fff;font-style:italic}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/lite.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
 <div class="topo" aria-hidden="true">
@@ -245,7 +247,7 @@
   <div class="ct-bar" id="ctBar">
     <span class="ct-label">📍 Your CalTopo map</span>
     <input id="ctUrl" type="url" class="ct-input" placeholder="https://caltopo.com/m/XXXX  — paste your saved map URL" spellcheck="false" autocomplete="off">
-    <a id="ctBtn" class="ct-open" href="#" target="_blank" rel="noopener">Open ↗</a>
+    <button id="ctBtn" class="ct-open">Open ↗</button>
   </div>
 
   <div class="dash">
@@ -291,6 +293,7 @@
     <a class="btn map" href="./map.html">◉ Open trail map</a>
     <button class="btn print" onclick="window.print()">Print / Save as PDF</button>
     <button class="btn" id="resetBtn">Reset all checks</button>
+    <button class="btn" id="kmzBtn" style="display:none">&#x1f4f8; Export photos to KMZ</button>
     <span class="save-tag" id="saveTag"></span>
   </div>
 
@@ -490,7 +493,142 @@ document.getElementById('resetBtn').addEventListener('click',()=>{
 
 renderPasses(); renderPeaks(); updateMeters();
 
-/* ---- PWA: register service worker (no-op when opened from file://) ---- */
+/* ---- PWA
+// ── IndexedDB for photos ──────────────────────────────────────────────────────
+let _idb;
+function getDB(){
+  if(_idb) return Promise.resolve(_idb);
+  return new Promise((res,rej)=>{
+    const r=indexedDB.open("ts395_photos",1);
+    r.onupgradeneeded=e=>e.target.result.createObjectStore("photos");
+    r.onsuccess=e=>{_idb=e.target.result;res(_idb);};
+    r.onerror=rej;
+  });
+}
+function savePhotoIDB(id,dataUrl){
+  return getDB().then(db=>{
+    const tx=db.transaction("photos","readwrite");
+    tx.objectStore("photos").put(dataUrl,id);
+    return new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=rej;});
+  });
+}
+function loadPhotoIDB(id){
+  return getDB().then(db=>new Promise((res,rej)=>{
+    const tx=db.transaction("photos","readonly");
+    const req=tx.objectStore("photos").get(id);
+    req.onsuccess=()=>res(req.result||null);
+    req.onerror=rej;
+  }));
+}
+function deletePhotoIDB(id){
+  s(id).has_photo=false; s(id).photo_gps=null; persist();
+  return getDB().then(db=>{
+    const tx=db.transaction("photos","readwrite");
+    tx.objectStore("photos").delete(id);
+  });
+}
+
+// ── Render a photo into a #ph_ID area ────────────────────────────────────────
+function renderPhotoArea(id, dataUrl){
+  const area=document.getElementById("ph_"+id);
+  if(!area) return;
+  const gps=s(id).photo_gps;
+  const ctLink=gps?"https://caltopo.com/map.html#ll="+gps.lat+","+gps.lng+"&z=15&b=mbt":"";
+  area.innerHTML=
+    '<img class="photo-thumb" src="'+dataUrl+'" alt="Summit photo">'+
+    (gps
+      ? '<span class="photo-gps">\uD83D\uDCCD '+gps.lat.toFixed(5)+', '+gps.lng.toFixed(5)+
+        ' &middot; <a class="photo-ct-link" href="'+ctLink+'" target="_blank" rel="noopener">View in CalTopo</a></span>'
+      : '<span class="photo-gps no-gps">No GPS in photo EXIF</span>')+
+    '<button class="photo-rm">\u00d7 Remove</button>';
+}
+
+// ── Populate photos after every render ────────────────────────────────────────
+function refreshPhotos(){
+  const all=[...PASSES,...PEAKS];
+  all.forEach(function(p){
+    if(s(p.id).has_photo){
+      loadPhotoIDB(p.id).then(function(dataUrl){
+        if(dataUrl) renderPhotoArea(p.id, dataUrl);
+      }).catch(function(){});
+    }
+  });
+}
+
+// ── Photo button click ────────────────────────────────────────────────────────
+document.addEventListener("click",function(e){
+  if(e.target.classList.contains("photo-btn")){
+    const item=e.target.closest(".item");
+    const id=item.dataset.id;
+    const inp=document.createElement("input");
+    inp.type="file"; inp.accept="image/*";
+    inp.onchange=async function(){
+      const file=inp.files[0];
+      if(!file) return;
+      const dataUrl=await new Promise(function(res,rej){
+        const fr=new FileReader();
+        fr.onload=function(){res(fr.result);}; fr.onerror=rej;
+        fr.readAsDataURL(file);
+      });
+      let gps=null;
+      try{
+        if(typeof exifr!=="undefined"){
+          const parsed=await exifr.gps(file).catch(function(){return null;});
+          if(parsed && parsed.latitude && parsed.longitude){
+            gps={lat:+parsed.latitude.toFixed(6), lng:+parsed.longitude.toFixed(6)};
+          }
+        }
+      }catch(_){}
+      s(id).has_photo=true;
+      s(id).photo_gps=gps;
+      persist();
+      await savePhotoIDB(id, dataUrl);
+      renderPhotoArea(id, dataUrl);
+      updateKmzBtn();
+    };
+    inp.click();
+  }
+  if(e.target.classList.contains("photo-rm")){
+    const id=e.target.closest(".item").dataset.id;
+    const area=document.getElementById("ph_"+id);
+    deletePhotoIDB(id).then(function(){
+      if(area) area.innerHTML='<button class="photo-btn">\uD83D\uDCF8 Add photo</button>';
+    });
+  }
+});
+
+// ── CalTopo map URL ───────────────────────────────────────────────────────────
+(function(){
+  const CT_KEY="ts395_cturl";
+  const inp=document.getElementById("ctUrl");
+  const btn=document.getElementById("ctBtn");
+  function save(){
+    const v=inp.value.trim();
+    localStorage.setItem(CT_KEY,v);
+    btn.style.opacity=v?"1":"0.45";
+  }
+  const saved=localStorage.getItem(CT_KEY)||"";
+  if(saved){ inp.value=saved; }
+  btn.style.opacity=saved?"1":"0.45";
+  inp.addEventListener("input", save);
+  inp.addEventListener("change", save);
+  inp.addEventListener("paste", function(){ setTimeout(save, 50); });
+  inp.addEventListener("keydown", function(e){
+    if(e.key==="Enter"){
+      e.preventDefault();
+      const v=inp.value.trim();
+      if(v) window.open(v,"_blank","noopener");
+      else inp.focus();
+    }
+  });
+  btn.addEventListener("click", function(){
+    const v=inp.value.trim();
+    if(v) window.open(v,"_blank","noopener");
+    else inp.focus();
+  });
+})();
+
+: register service worker (no-op when opened from file://) ---- */
 if("serviceWorker" in navigator && location.protocol.startsWith("http")){
   window.addEventListener("load",()=>{
     navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("SW registration failed:",err));
