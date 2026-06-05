@@ -1,380 +1,66 @@
 {
   "type": "FeatureCollection",
-  "_comment": "Eastern Sierra 395 passes + trailheads. Verified coords from USGS GNIS/Wikipedia. Markers tagged '(approx)' are estimated - confirm on the topo. Import into CalTopo: Import > choose this .geojson. Then use the Line tool with 'Snap to trail/route' to draw the actual track between trailhead and pass.",
   "features": [
     {
       "type": "Feature",
+      "properties": {
+        "title": "Baxter Pass",
+        "type": "Pass",
+        "elevation": "12300 ft",
+        "difficulty": "Very Hard",
+        "week_plan": "Week 18",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -118.215087,
-          36.452992
+          -118.37603,
+          36.83528
         ]
-      },
-      "properties": {
-        "title": "Cottonwood Pass",
-        "name": "Cottonwood Pass",
-        "label": "Cottonwood Pass",
-        "description": "~7 mi RT, ~1,200 ft gain. TH: Horseshoe Meadows.\\nDifficulty: Easy. Summit elev ~11,128 ft.\\nTrail: https://www.alltrails.com/trail/us/california/cottonwood-pass-new-army-pass-loop\\nCoord source: USGS GNIS.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.23981,
-          36.490214
-        ]
-      },
       "properties": {
-        "title": "New Army Pass",
-        "name": "New Army Pass",
-        "label": "New Army Pass",
-        "description": "~15 mi RT, ~2,300 ft gain. TH: Cottonwood Lakes.\\nDifficulty: Hard. Summit elev ~12,178 ft.\\nTrail: https://www.alltrails.com/trail/us/california/cottonwood-lake-and-long-lake-via-cottonwood-lakes-and-new-army-pass-trail\\nCoord source: USGS GNIS.",
-        "marker-color": "#dd8a45",
+        "title": "Bishop Pass",
+        "type": "Pass",
+        "elevation": "11972 ft",
+        "difficulty": "Mod–Hard",
+        "week_plan": "Week 10",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.344539,
-          36.672435
-        ]
+        "marker-size": "medium"
       },
-      "properties": {
-        "title": "Shepherd Pass",
-        "name": "Shepherd Pass",
-        "label": "Shepherd Pass",
-        "description": "~21.6 mi RT, ~6,800 ft gain. TH: Symmes Creek.\\nDifficulty: Very Hard. Summit elev ~12,027 ft.\\nTrail: https://www.hikingproject.com/trail/7116808/shepherd-pass-out-and-back\\nCoord source: USGS GNIS.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.376248,
-          36.772602
-        ]
-      },
-      "properties": {
-        "title": "Kearsarge Pass",
-        "name": "Kearsarge Pass",
-        "label": "Kearsarge Pass",
-        "description": "~9.6 mi RT, ~2,660 ft gain. TH: Onion Valley.\\nDifficulty: Moderate. Summit elev ~11,709 ft.\\nTrail: https://www.alltrails.com/trail/us/california/kearsarge-pass-trail-to-kearsarge-lakes\\nCoord source: USGS GNIS / Wikipedia.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.36444,
-          36.88306
-        ]
-      },
-      "properties": {
-        "title": "Sawmill Pass",
-        "name": "Sawmill Pass",
-        "label": "Sawmill Pass",
-        "description": "~21 mi RT, ~6,700 ft gain. TH: Division Creek.\\nDifficulty: Very Hard. Summit elev ~11,309 ft.\\nTrail: https://www.alltrails.com/trail/us/california/sawmill-pass-trail\\nCoord source: USGS GNIS / Wikipedia.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.41389,
-          36.98472
-        ]
-      },
-      "properties": {
-        "title": "Taboose Pass",
-        "name": "Taboose Pass",
-        "label": "Taboose Pass",
-        "description": "~16 mi RT, ~6,000 ft gain. TH: Aberdeen/Taboose Creek.\\nDifficulty: Very Hard. Summit elev ~11,417 ft.\\nTrail: https://www.alltrails.com/trail/us/california/taboose-pass-to-cardinal-mountain\\nCoord source: USGS GNIS / Wikipedia.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -118.544829,
           37.114656
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
-        "title": "Bishop Pass",
-        "name": "Bishop Pass",
-        "label": "Bishop Pass",
-        "description": "~12 mi RT, ~2,150 ft gain. TH: South Lake.\\nDifficulty: Mod-Hard. Summit elev ~11,972 ft.\\nTrail: https://www.alltrails.com/trail/us/california/bishop-pass-trail\\nCoord source: USGS GNIS.",
-        "marker-color": "#dd8a45",
+        "title": "Cottonwood Pass",
+        "type": "Pass",
+        "elevation": "11128 ft",
+        "difficulty": "Easy",
+        "week_plan": "Week 1",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.684003,
-          37.239101
-        ]
-      },
-      "properties": {
-        "title": "Piute Pass",
-        "name": "Piute Pass",
-        "label": "Piute Pass",
-        "description": "~9.6 mi RT, ~2,078 ft gain. TH: North Lake.\\nDifficulty: Moderate. Summit elev ~11,423 ft.\\nTrail: https://www.alltrails.com/trail/us/california/piute-pass-trail\\nCoord source: USGS GNIS / Wikipedia.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.772623,
-          37.424934
-        ]
-      },
-      "properties": {
-        "title": "Mono Pass (Rock Creek)",
-        "name": "Mono Pass (Rock Creek)",
-        "label": "Mono Pass (Rock Creek)",
-        "description": "~9 mi RT, ~2,280 ft gain. TH: Mosquito Flat.\\nDifficulty: Mod-Hard. Summit elev ~12,073 ft.\\nTrail: https://www.alltrails.com/trail/us/california/mono-pass-from-mosquito-flat-trailhead\\nCoord source: USGS GNIS.",
-        "marker-color": "#dd8a45",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.7389,
-          37.4126
-        ]
-      },
-      "properties": {
-        "title": "Morgan Pass (approx)",
-        "name": "Morgan Pass (approx)",
-        "label": "Morgan Pass (approx)",
-        "description": "** APPROXIMATE LOCATION - verify against the CalTopo topo layer before relying on it. **\\n~8-9 mi RT, ~1,000-1,600 ft. TH: Mosquito Flat. APPROX location - confirm the saddle on the topo.\\nDifficulty: Easy-Mod. Summit elev ~11,100 ft.\\nTrail: https://www.alltrails.com/trail/us/california/mosquito-flat-to-morgan-lakes\\nCoord source: Estimated.",
-        "marker-color": "#c0392b",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (APPROX - verify)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -119.0013,
-          37.525
-        ]
-      },
-      "properties": {
-        "title": "Duck Pass (approx)",
-        "name": "Duck Pass (approx)",
-        "label": "Duck Pass (approx)",
-        "description": "** APPROXIMATE LOCATION - verify against the CalTopo topo layer before relying on it. **\\n~8 mi RT, ~1,680 ft. TH: Coldwater CG, Mammoth. APPROX location - confirm the saddle on the topo.\\nDifficulty: Moderate. Summit elev ~10,790 ft.\\nTrail: https://www.alltrails.com/trail/us/california/duck-lake-via-emerald-lake-trail\\nCoord source: Estimated.",
-        "marker-color": "#c0392b",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (APPROX - verify)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.358,
-          36.849
-        ]
-      },
-      "properties": {
-        "title": "Baxter Pass (approx)",
-        "name": "Baxter Pass (approx)",
-        "label": "Baxter Pass (approx)",
-        "description": "** APPROXIMATE LOCATION - verify against the CalTopo topo layer before relying on it. **\\n~16 mi RT, ~6,300 ft. TH: Oak Creek (36.84485,-118.29763). Unmaintained. APPROX location - confirm on topo.\\nDifficulty: Very Hard. Summit elev ~12,300 ft.\\nTrail: https://www.mountainproject.com/area/114076816/10-taboose-sawmill-baxter-passes\\nCoord source: Estimated.",
-        "marker-color": "#c0392b",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (APPROX - verify)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -119.273,
-          38.0455
-        ]
-      },
-      "properties": {
-        "title": "Burro/Summit Pass (approx)",
-        "name": "Burro/Summit Pass (approx)",
-        "label": "Burro/Summit Pass (approx)",
-        "description": "** APPROXIMATE LOCATION - verify against the CalTopo topo layer before relying on it. **\\n5.6-10 mi RT. TH: Virginia Lakes, Bridgeport. APPROX location - confirm the saddle on the topo.\\nDifficulty: Moderate. Summit elev ~11,100 ft.\\nTrail: https://www.alltrails.com/trail/us/california/virginia-lakes-trail\\nCoord source: Estimated.",
-        "marker-color": "#c0392b",
-        "marker-symbol": "mountain",
-        "marker-size": "medium",
-        "folder": "Passes (APPROX - verify)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.2789,
-          36.727314
-        ]
-      },
-      "properties": {
-        "title": "TH - Symmes Creek (Shepherd Pass)",
-        "name": "TH - Symmes Creek (Shepherd Pass)",
-        "label": "TH - Symmes Creek (Shepherd Pass)",
-        "description": "Trailhead, ~6,302 ft. Coord source: USGS GNIS.",
-        "marker-color": "#2f6f4f",
-        "marker-symbol": "parking",
-        "marker-size": "small",
-        "folder": "Trailheads (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.7472,
-          37.435097
-        ]
-      },
-      "properties": {
-        "title": "TH - Mosquito Flat (Mono/Morgan)",
-        "name": "TH - Mosquito Flat (Mono/Morgan)",
-        "label": "TH - Mosquito Flat (Mono/Morgan)",
-        "description": "Trailhead, ~10,236 ft. Coord source: USGS GNIS.",
-        "marker-color": "#2f6f4f",
-        "marker-symbol": "parking",
-        "marker-size": "small",
-        "folder": "Trailheads (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.17065,
-          36.44834
-        ]
-      },
-      "properties": {
-        "title": "TH - Horseshoe Meadows (Cottonwood Pass)",
-        "name": "TH - Horseshoe Meadows (Cottonwood Pass)",
-        "label": "TH - Horseshoe Meadows (Cottonwood Pass)",
-        "description": "Trailhead, ~10,000 ft. Coord source: Hikespeak.",
-        "marker-color": "#2f6f4f",
-        "marker-symbol": "parking",
-        "marker-size": "small",
-        "folder": "Trailheads (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.1699,
-          36.4532
-        ]
-      },
-      "properties": {
-        "title": "TH - Cottonwood Lakes (New Army Pass)",
-        "name": "TH - Cottonwood Lakes (New Army Pass)",
-        "label": "TH - Cottonwood Lakes (New Army Pass)",
-        "description": "Trailhead, ~10,040 ft. Coord source: Hikespeak.",
-        "marker-color": "#2f6f4f",
-        "marker-symbol": "parking",
-        "marker-size": "small",
-        "folder": "Trailheads (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -118.29763,
-          36.84485
-        ]
-      },
-      "properties": {
-        "title": "TH - Oak Creek (Baxter Pass)",
-        "name": "TH - Oak Creek (Baxter Pass)",
-        "label": "TH - Oak Creek (Baxter Pass)",
-        "description": "Trailhead, ~6,037 ft. Coord source: Trailforks.",
-        "marker-color": "#2f6f4f",
-        "marker-symbol": "parking",
-        "marker-size": "small",
-        "folder": "Trailheads (verified)"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "title": "Mono Pass (Yosemite)",
-        "marker-color": "#4e9af1",
-        "marker-symbol": "mountain",
-        "notes": "USGS-verified \u00b7 Easy\u2013Mod \u00b7 10,597 ft \u00b7 ~8 mi RT \u00b7 Hwy 120 TH near Lee Vining"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -119.213306,
-          37.855333
+          -118.21531,
+          36.45386
         ]
       }
     },
@@ -382,9 +68,14 @@
       "type": "Feature",
       "properties": {
         "title": "Donohue Pass",
-        "marker-color": "#4e9af1",
+        "type": "Pass",
+        "elevation": "11066 ft",
+        "difficulty": "Hard",
+        "week_plan": "Week 13",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "notes": "USGS-verified \u00b7 Hard \u00b7 11,066 ft \u00b7 ~25 mi RT \u00b7 Tuolumne Meadows (JMT/PCT)"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
@@ -397,80 +88,642 @@
     {
       "type": "Feature",
       "properties": {
-        "title": "Parker Pass (approx)",
-        "marker-color": "#e8641a",
+        "title": "Duck Pass",
+        "type": "Pass",
+        "elevation": "10800 ft",
+        "difficulty": "Moderate",
+        "week_plan": "Week 6",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "notes": "APPROX \u2014 verify saddle on topo \u00b7 Hard \u00b7 ~12,100 ft \u00b7 ~10 mi RT \u00b7 Mono Pass TH"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -119.209,
-          37.848
+          -118.96233,
+          37.55852
         ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "title": "Koip Peak Pass (approx)",
-        "marker-color": "#e8641a",
+        "title": "Mammoth Pass",
+        "type": "Pass",
+        "elevation": "9350 ft",
+        "difficulty": "Easy",
+        "week_plan": "Week 2",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "notes": "APPROX \u2014 verify saddle on topo \u00b7 Hard \u00b7 ~12,979 ft \u00b7 ~18 mi RT \u00b7 Mono Pass TH"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -119.223,
-          37.835
+          -119.07618,
+          37.61534
         ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "title": "Mammoth Pass (approx)",
-        "marker-color": "#e8641a",
+        "title": "Island Pass",
+        "type": "Pass",
+        "elevation": "10203 ft",
+        "difficulty": "Moderate",
+        "week_plan": "Week 7",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "notes": "APPROX \u2014 verify saddle on topo \u00b7 Easy \u00b7 ~9,350 ft \u00b7 ~4 mi RT \u00b7 Horseshoe Lake"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -119.041,
-          37.614
+          -119.19457,
+          37.73698
         ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "title": "Island Pass (approx)",
-        "marker-color": "#e8641a",
+        "title": "Kearsarge Pass",
+        "type": "Pass",
+        "elevation": "11709 ft",
+        "difficulty": "Moderate",
+        "week_plan": "Week 9",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "notes": "APPROX \u2014 verify saddle on topo \u00b7 Moderate \u00b7 ~10,203 ft \u00b7 ~14 mi RT \u00b7 Agnew Meadows"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -119.112,
-          37.714
+          -118.37661,
+          36.77302
         ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "title": "McGee Pass (approx)",
-        "marker-color": "#e8641a",
+        "title": "Koip Peak Pass",
+        "type": "Pass",
+        "elevation": "12979 ft",
+        "difficulty": "Hard",
+        "week_plan": "Week 16",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
         "marker-symbol": "mountain",
-        "notes": "APPROX \u2014 verify saddle on topo \u00b7 Hard \u00b7 11,895 ft \u00b7 ~22 mi RT \u00b7 McGee Creek TH"
+        "marker-size": "medium"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -118.907,
-          37.558
+          -119.19239,
+          37.8146
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "McGee Pass",
+        "type": "Pass",
+        "elevation": "11895 ft",
+        "difficulty": "Hard",
+        "week_plan": "Week 15",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.82152,
+          37.5094
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Mono Pass",
+        "type": "Pass",
+        "elevation": "12073 ft",
+        "difficulty": "Mod–Hard",
+        "week_plan": "Week 11",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.77372,
+          37.42266
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Mono Pass (Yosemite)",
+        "type": "Pass",
+        "elevation": "10597 ft",
+        "difficulty": "Easy–Mod",
+        "week_plan": "Week 4",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.21662,
+          37.85555
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Morgan Pass",
+        "type": "Pass",
+        "elevation": "11100 ft",
+        "difficulty": "Easy–Mod",
+        "week_plan": "Week 3",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.75099,
+          37.39132
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "New Army Pass",
+        "type": "Pass",
+        "elevation": "12178 ft",
+        "difficulty": "Hard",
+        "week_plan": "Week 12",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.24075,
+          36.49041
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Piute Pass",
+        "type": "Pass",
+        "elevation": "11423 ft",
+        "difficulty": "Moderate",
+        "week_plan": "Week 8",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.6843,
+          37.23877
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Parker Pass",
+        "type": "Pass",
+        "elevation": "12100 ft",
+        "difficulty": "Hard",
+        "week_plan": "Week 14",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.206,
+          37.83774
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Sawmill Pass",
+        "type": "Pass",
+        "elevation": "11309 ft",
+        "difficulty": "Very Hard",
+        "week_plan": "Week 19",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.36444,
+          36.88306
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Shepherd Pass",
+        "type": "Pass",
+        "elevation": "12027 ft",
+        "difficulty": "Very Hard",
+        "week_plan": "Week 20",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.34571,
+          36.67217
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Taboose Pass",
+        "type": "Pass",
+        "elevation": "11417 ft",
+        "difficulty": "Very Hard",
+        "week_plan": "Week 17",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.41407,
+          36.98477
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Virginia/ Summit Pass",
+        "type": "Pass",
+        "elevation": "11100 ft",
+        "difficulty": "Moderate",
+        "week_plan": "Week 5",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#2563eb",
+        "marker-symbol": "mountain",
+        "marker-size": "medium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.29532,
+          38.04173
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Agnew Meadows TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.08631,
+          37.68192
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Oak Creek TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.29763,
+          36.84485
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "South Lake TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.56579,
+          37.16944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Virginia Lakes TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.26316,
+          38.04794
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Duck Pass TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.98912,
+          37.59121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Cottonwood Lakes TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.1699,
+          36.4532
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Division Creek TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.29013,
+          36.9389
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Taboose Creek TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.3672,
+          36.9375
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Tuolumne Meadows TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.37391,
+          37.87201
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Horseshoe Lake TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.02057,
+          37.61293
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Horseshoe Meadows TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.17065,
+          36.44834
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Onion Valley TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.34111,
+          36.7725
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Mono Pass TH (Hwy 120)",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.26251,
+          37.89104
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "McGee Creek TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.80255,
+          37.551
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Mosquito Flat TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.74709,
+          37.43525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "North Lake TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.62747,
+          37.22735
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Symmes Creek TH",
+        "type": "Trailhead",
+        "coord_status": "CalTopo-verified",
+        "marker-color": "#16a34a",
+        "marker-symbol": "car",
+        "marker-size": "small"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.27899,
+          36.72696
         ]
       }
     }

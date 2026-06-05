@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Eastern Sierra 395 Passes">
+  <metadata>
+    <name>Eastern Sierra 395 — Passes &amp; Trailheads (CalTopo-verified)</name>
+  </metadata>
+  <wpt lat="36.45386" lon="-118.21531">
+    <ele>3392</ele>
+    <name>Cottonwood Pass</name>
+    <desc>Pass | 11128 | Easy | Week 1 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.49041" lon="-118.24075">
+    <ele>3712</ele>
+    <name>New Army Pass</name>
+    <desc>Pass | 12178 | Hard | Week 12 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.67217" lon="-118.34571">
+    <ele>3666</ele>
+    <name>Shepherd Pass</name>
+    <desc>Pass | 12027 | Very Hard | Week 20 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.77302" lon="-118.37661">
+    <ele>3569</ele>
+    <name>Kearsarge Pass</name>
+    <desc>Pass | 11709 | Moderate | Week 9 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.83528" lon="-118.37603">
+    <ele>3749</ele>
+    <name>Baxter Pass</name>
+    <desc>Pass | 12300 | Very Hard | Week 18 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.88306" lon="-118.36444">
+    <ele>3447</ele>
+    <name>Sawmill Pass</name>
+    <desc>Pass | 11309 | Very Hard | Week 19 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.98477" lon="-118.41407">
+    <ele>3480</ele>
+    <name>Taboose Pass</name>
+    <desc>Pass | 11417 | Very Hard | Week 17 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.114656" lon="-118.544829">
+    <ele>3649</ele>
+    <name>Bishop Pass</name>
+    <desc>Pass | 11972 | Mod–Hard | Week 10 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.23877" lon="-118.6843">
+    <ele>3482</ele>
+    <name>Piute Pass</name>
+    <desc>Pass | 11423 | Moderate | Week 8 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.39132" lon="-118.75099">
+    <ele>3383</ele>
+    <name>Morgan Pass</name>
+    <desc>Pass | 11100 | Easy–Mod | Week 3 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.42266" lon="-118.77372">
+    <ele>3680</ele>
+    <name>Mono Pass</name>
+    <desc>Pass | 12073 | Mod–Hard | Week 11 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.5094" lon="-118.82152">
+    <ele>3626</ele>
+    <name>McGee Pass</name>
+    <desc>Pass | 11895 | Hard | Week 15 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.55852" lon="-118.96233">
+    <ele>3292</ele>
+    <name>Duck Pass</name>
+    <desc>Pass | 10800 | Moderate | Week 6 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.61534" lon="-119.07618">
+    <ele>2850</ele>
+    <name>Mammoth Pass</name>
+    <desc>Pass | 9350 | Easy | Week 2 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.73698" lon="-119.19457">
+    <ele>3110</ele>
+    <name>Island Pass</name>
+    <desc>Pass | 10203 | Moderate | Week 7 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.760208" lon="-119.24848">
+    <ele>3373</ele>
+    <name>Donohue Pass</name>
+    <desc>Pass | 11066 | Hard | Week 13 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.8146" lon="-119.19239">
+    <ele>3956</ele>
+    <name>Koip Peak Pass</name>
+    <desc>Pass | 12979 | Hard | Week 16 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.83774" lon="-119.206">
+    <ele>3688</ele>
+    <name>Parker Pass</name>
+    <desc>Pass | 12100 | Hard | Week 14 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="37.85555" lon="-119.21662">
+    <ele>3230</ele>
+    <name>Mono Pass (Yosemite)</name>
+    <desc>Pass | 10597 | Easy–Mod | Week 4 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="38.04173" lon="-119.29532">
+    <ele>3383</ele>
+    <name>Virginia/ Summit Pass</name>
+    <desc>Pass | 11100 | Moderate | Week 5 | CalTopo-verified</desc>
+    <sym>Summit</sym>
+    <type>Pass</type>
+  </wpt>
+  <wpt lat="36.44834" lon="-118.17065">
+    <name>Horseshoe Meadows TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="36.4532" lon="-118.1699">
+    <name>Cottonwood Lakes TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="36.72696" lon="-118.27899">
+    <name>Symmes Creek TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="36.7725" lon="-118.34111">
+    <name>Onion Valley TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="36.84485" lon="-118.29763">
+    <name>Oak Creek TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="36.9375" lon="-118.3672">
+    <name>Taboose Creek TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="36.9389" lon="-118.29013">
+    <name>Division Creek TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.16944" lon="-118.56579">
+    <name>South Lake TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.22735" lon="-118.62747">
+    <name>North Lake TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.43525" lon="-118.74709">
+    <name>Mosquito Flat TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.551" lon="-118.80255">
+    <name>McGee Creek TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.59121" lon="-118.98912">
+    <name>Duck Pass TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.61293" lon="-119.02057">
+    <name>Horseshoe Lake TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.68192" lon="-119.08631">
+    <name>Agnew Meadows TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.87201" lon="-119.37391">
+    <name>Tuolumne Meadows TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="37.89104" lon="-119.26251">
+    <name>Mono Pass TH (Hwy 120)</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+  <wpt lat="38.04794" lon="-119.26316">
+    <name>Virginia Lakes TH</name>
+    <sym>Trailhead</sym>
+    <type>Trailhead</type>
+  </wpt>
+</gpx>
