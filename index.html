@@ -147,6 +147,12 @@
   .go{font-family:'Spectral',serif;font-size:.82rem;color:var(--glacier);text-decoration:none;border-bottom:1px solid transparent;transition:.18s}
   .go:hover{border-color:var(--glacier)}
   .go::after{content:" \2197"}
+  .links{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:9px}
+  .links .go{font-size:.8rem}
+  .go.gl{color:#cf945f}
+  .go.gc{color:#9aa0a6}
+  .btn.map{color:var(--glacier);border-color:rgba(111,179,184,.45);text-decoration:none}
+  .btn.map:hover{border-color:var(--glacier);color:#9fd0d3}
 
   .week{font-family:'Fraunces',serif;font-size:.74rem;color:var(--alpenglow);letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:3px}
 
@@ -175,6 +181,18 @@
     .go{color:#555}
     a[href]::after{content:" (" attr(href) ")";font-size:.7em;color:#777}
   }
+  .log-toggle{font-family:'Spectral',serif;font-style:italic;font-size:.79rem;background:transparent;border:none;color:var(--ink-faint);cursor:pointer;padding:7px 0 0;display:inline-block;transition:.15s;text-align:left}
+  .log-toggle:hover{color:var(--alpenglow)}
+  .log-panel{display:none;flex-direction:column;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+  .log-panel.open{display:flex}
+  .log-field{display:flex;flex-direction:column;gap:4px}
+  .log-field label{font-size:.7rem;color:var(--ink-faint);letter-spacing:.07em;text-transform:uppercase}
+  .log-panel input[type=date]{background:var(--granite-2);color:var(--ink);border:1px solid var(--card-edge);border-radius:6px;padding:6px 10px;font-size:.88rem;font-family:'Spectral',serif;color-scheme:dark;width:fit-content;max-width:195px}
+  .log-panel textarea{background:var(--granite-2);color:var(--ink);border:1px solid var(--card-edge);border-radius:6px;padding:8px 10px;font-size:.88rem;font-family:'Spectral',serif;resize:vertical;min-height:66px;width:100%}
+  .log-panel input:focus,.log-panel textarea:focus{outline:none;border-color:var(--alpenglow)}
+  .log-meta{display:flex;flex-direction:column;gap:2px;margin-top:5px;min-height:0}
+  .ldt{font-size:.79rem;color:var(--alpenglow);font-style:italic}
+  .lnt{font-size:.79rem;color:var(--ink-soft);font-style:italic}
 </style>
 </head>
 <body>
@@ -207,7 +225,7 @@
   <div class="dash">
     <div class="meter passes">
       <h3>Passes crossed</h3>
-      <div class="count"><b id="pCount">0</b><span> / 13</span></div>
+      <div class="count"><b id="pCount">0</b><span> / 20</span></div>
       <div class="bar"><i id="pBar"></i></div>
     </div>
     <div class="meter peaks">
@@ -244,6 +262,7 @@
   </section>
 
   <div class="tools">
+    <a class="btn map" href="./map.html">◉ Open trail map</a>
     <button class="btn print" onclick="window.print()">Print / Save as PDF</button>
     <button class="btn" id="resetBtn">Reset all checks</button>
     <span class="save-tag" id="saveTag"></span>
@@ -256,19 +275,26 @@
 
 <script>
 const PASSES=[
- {id:"cottonwood",name:"Cottonwood Pass",where:"Horseshoe Meadows · Lone Pine",rt:"~7 mi",gain:"~1,200 ft",elev:"11,200 ft",diff:"Easy",cls:"p-easy",link:"https://www.alltrails.com/trail/us/california/cottonwood-pass-new-army-pass-loop",week:1,d:1,len:7,ns:13},
- {id:"morgan",name:"Morgan Pass",where:"Mosquito Flat · Rock Creek",rt:"~8–9.4 mi",gain:"~1,000–1,600 ft",elev:"11,100 ft",diff:"Easy–Mod",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/mosquito-flat-to-morgan-lakes",week:2,d:2,len:8.5,ns:3},
- {id:"burro",name:"Burro / Summit Pass",where:"Virginia Lakes · Bridgeport",rt:"5.6 mi (10 to Summit Lk)",gain:"1,320–2,510 ft",elev:"11,120 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/virginia-lakes-trail",week:3,d:3,len:5.6,ns:1},
- {id:"duck",name:"Duck Pass",where:"Coldwater CG · Mammoth Lakes",rt:"~8 mi",gain:"~1,680 ft",elev:"10,800 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/duck-lake-via-emerald-lake-trail",week:4,d:3,len:8,ns:2},
- {id:"piute",name:"Piute Pass",where:"North Lake · Bishop",rt:"~9.6 mi",gain:"~2,078 ft",elev:"11,423 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/piute-pass-trail",week:5,d:3,len:9.6,ns:5},
- {id:"kearsarge",name:"Kearsarge Pass",where:"Onion Valley · Independence",rt:"~9.6 mi",gain:"~2,660 ft",elev:"11,760 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/kearsarge-pass-trail-to-kearsarge-lakes",week:6,d:3,len:9.6,ns:10},
- {id:"bishop",name:"Bishop Pass",where:"South Lake · Bishop",rt:"~12 mi",gain:"~2,150 ft",elev:"11,972 ft",diff:"Mod–Hard",cls:"p-modhard",link:"https://www.alltrails.com/trail/us/california/bishop-pass-trail",week:7,d:4,len:12,ns:6},
- {id:"mono",name:"Mono Pass (Rock Creek)",where:"Mosquito Flat · Rock Creek",rt:"~9 mi",gain:"~2,280 ft",elev:"12,060 ft",diff:"Mod–Hard",cls:"p-modhard",link:"https://www.alltrails.com/trail/us/california/mono-pass-from-mosquito-flat-trailhead",week:8,d:4,len:9,ns:4},
- {id:"newarmy",name:"New Army Pass",where:"Cottonwood Lakes · Lone Pine",rt:"~15 mi",gain:"~2,300 ft",elev:"12,300 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/trail/us/california/cottonwood-lake-and-long-lake-via-cottonwood-lakes-and-new-army-pass-trail",week:9,d:5,len:15,ns:12},
- {id:"taboose",name:"Taboose Pass",where:"Aberdeen · Big Pine",rt:"~16 mi",gain:"~6,000 ft",elev:"11,400 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.alltrails.com/trail/us/california/taboose-pass-to-cardinal-mountain",week:10,d:6,len:16,ns:7},
- {id:"baxter",name:"Baxter Pass",where:"Oak Creek · Independence",rt:"~16 mi",gain:"~6,300 ft",elev:"12,320 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.mountainproject.com/area/114076816/10-taboose-sawmill-baxter-passes",week:11,d:6,len:16,ns:9},
- {id:"sawmill",name:"Sawmill Pass",where:"Division Creek · Independence",rt:"~21 mi",gain:"~6,700 ft",elev:"11,347 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.alltrails.com/trail/us/california/sawmill-pass-trail",week:12,d:6,len:21,ns:8},
- {id:"shepherd",name:"Shepherd Pass",where:"Symmes Creek · Independence",rt:"~21.6 mi",gain:"~6,800 ft",elev:"12,000 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.hikingproject.com/trail/7116808/shepherd-pass-out-and-back",week:13,d:6,len:21.6,ns:11}
+ {id:"cottonwood",lat:36.45299,lng:-118.21509,wq:"Cottonwood Pass Sierra",approx:0,name:"Cottonwood Pass",where:"Horseshoe Meadows · Lone Pine",rt:"~7 mi",gain:"~1,200 ft",elev:"11,128 ft",diff:"Easy",cls:"p-easy",link:"https://www.alltrails.com/trail/us/california/cottonwood-pass-new-army-pass-loop",week:1,d:1,len:7,ns:13},
+ {id:"mammothpass",lat:37.614000,lng:-119.041000,wq:"Mammoth Pass Horseshoe Lake",approx:1,name:"Mammoth Pass",where:"Horseshoe Lake · Mammoth Lakes",rt:"~4 mi",gain:"~600 ft",elev:"~9,350 ft",diff:"Easy",cls:"p-easy",link:"https://www.alltrails.com/explore?q=Mammoth+Pass+Horseshoe+Lake",week:2,d:1,len:4,ns:2.3},
+ {id:"morgan",lat:37.41260,lng:-118.73890,wq:"Morgan Pass Little Lakes Valley",approx:1,name:"Morgan Pass",where:"Mosquito Flat · Rock Creek",rt:"~8–9.4 mi",gain:"~1,000–1,600 ft",elev:"~11,100 ft",diff:"Easy–Mod",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/mosquito-flat-to-morgan-lakes",week:3,d:2,len:8.5,ns:3},
+ {id:"monoyose",lat:37.855333,lng:-119.213306,wq:"Mono Pass Yosemite Bloody Canyon",approx:0,name:"Mono Pass (Yosemite)",where:"Hwy 120 Trailhead · Lee Vining (Yosemite fee)",rt:"~8 mi",gain:"~1,130 ft",elev:"10,597 ft",diff:"Easy–Mod",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/mono-pass-trail",week:4,d:2,len:8,ns:0.4},
+ {id:"burro",lat:38.04550,lng:-119.27300,wq:"Virginia Lakes Summit Pass",approx:1,name:"Burro / Summit Pass",where:"Virginia Lakes · Bridgeport",rt:"5.6 mi (10 to Summit Lk)",gain:"1,320–2,510 ft",elev:"~11,100 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/virginia-lakes-trail",week:5,d:3,len:5.6,ns:1},
+ {id:"duck",lat:37.52500,lng:-119.00130,wq:"Duck Pass Mammoth",approx:1,name:"Duck Pass",where:"Coldwater CG · Mammoth Lakes",rt:"~8 mi",gain:"~1,680 ft",elev:"~10,800 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/duck-lake-via-emerald-lake-trail",week:6,d:3,len:8,ns:2},
+ {id:"island",lat:37.714000,lng:-119.112000,wq:"Island Pass Agnew Meadows JMT",approx:1,name:"Island Pass",where:"Agnew Meadows · Mammoth Lakes (JMT)",rt:"~14 mi",gain:"~2,200 ft",elev:"~10,203 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/explore?q=Island+Pass+Agnew+Meadows",week:7,d:3,len:14,ns:2.6},
+ {id:"piute",lat:37.23910,lng:-118.68400,wq:"Piute Pass",approx:0,name:"Piute Pass",where:"North Lake · Bishop",rt:"~9.6 mi",gain:"~2,078 ft",elev:"11,423 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/piute-pass-trail",week:8,d:3,len:9.6,ns:5},
+ {id:"kearsarge",lat:36.77260,lng:-118.37625,wq:"Kearsarge Pass",approx:0,name:"Kearsarge Pass",where:"Onion Valley · Independence",rt:"~9.6 mi",gain:"~2,660 ft",elev:"11,709 ft",diff:"Moderate",cls:"p-mod",link:"https://www.alltrails.com/trail/us/california/kearsarge-pass-trail-to-kearsarge-lakes",week:9,d:3,len:9.6,ns:10},
+ {id:"bishop",lat:37.11466,lng:-118.54483,wq:"Bishop Pass",approx:0,name:"Bishop Pass",where:"South Lake · Bishop",rt:"~12 mi",gain:"~2,150 ft",elev:"11,972 ft",diff:"Mod–Hard",cls:"p-modhard",link:"https://www.alltrails.com/trail/us/california/bishop-pass-trail",week:10,d:4,len:12,ns:6},
+ {id:"mono",lat:37.42493,lng:-118.77262,wq:"Mono Pass Rock Creek",approx:0,name:"Mono Pass (Rock Creek)",where:"Mosquito Flat · Rock Creek",rt:"~9 mi",gain:"~2,280 ft",elev:"12,073 ft",diff:"Mod–Hard",cls:"p-modhard",link:"https://www.alltrails.com/trail/us/california/mono-pass-from-mosquito-flat-trailhead",week:11,d:4,len:9,ns:4},
+ {id:"newarmy",lat:36.49021,lng:-118.23981,wq:"New Army Pass",approx:0,name:"New Army Pass",where:"Cottonwood Lakes · Lone Pine",rt:"~15 mi",gain:"~2,300 ft",elev:"12,178 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/trail/us/california/cottonwood-lake-and-long-lake-via-cottonwood-lakes-and-new-army-pass-trail",week:12,d:5,len:15,ns:12},
+ {id:"donohue",lat:37.760208,lng:-119.248480,wq:"Donohue Pass JMT Tuolumne",approx:0,name:"Donohue Pass",where:"Tuolumne Meadows · Yosemite (JMT/PCT)",rt:"~25 mi",gain:"~2,456 ft",elev:"11,066 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/explore?q=Donohue+Pass+Tuolumne",week:13,d:5,len:25,ns:0.5},
+ {id:"parker",lat:37.848000,lng:-119.209000,wq:"Parker Pass Yosemite",approx:1,name:"Parker Pass",where:"Mono Pass Trailhead · Hwy 120",rt:"~10 mi",gain:"~2,900 ft",elev:"~12,100 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/trail/us/california/alger-lakes-via-mono-pass-and-parker-pass-trails",week:14,d:5,len:10,ns:0.6},
+ {id:"mcgee",lat:37.558000,lng:-118.907000,wq:"McGee Pass McGee Creek Mammoth",approx:1,name:"McGee Pass",where:"McGee Creek Trailhead · Crowley Lake",rt:"~22 mi",gain:"~4,000 ft",elev:"11,895 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/trail/us/california/mammoth-lakes-to-mcgee-creek-via-duck-and-mcgee-pass",week:15,d:5,len:22,ns:3.7},
+ {id:"koip",lat:37.835000,lng:-119.223000,wq:"Koip Peak Pass June Lake",approx:1,name:"Koip Peak Pass",where:"Mono Pass Trailhead · Hwy 120",rt:"~18 mi",gain:"~4,084 ft",elev:"~12,979 ft",diff:"Hard",cls:"p-hard",link:"https://www.alltrails.com/trail/us/california/koip-peak-trail",week:16,d:5,len:18,ns:0.7},
+ {id:"taboose",lat:36.98472,lng:-118.41389,wq:"Taboose Pass",approx:0,name:"Taboose Pass",where:"Aberdeen · Big Pine",rt:"~16 mi",gain:"~6,000 ft",elev:"11,417 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.alltrails.com/trail/us/california/taboose-pass-to-cardinal-mountain",week:17,d:6,len:16,ns:7},
+ {id:"baxter",lat:36.84900,lng:-118.35800,wq:"Baxter Pass",approx:1,name:"Baxter Pass",where:"Oak Creek · Independence",rt:"~16 mi",gain:"~6,300 ft",elev:"~12,300 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.mountainproject.com/area/114076816/10-taboose-sawmill-baxter-passes",week:18,d:6,len:16,ns:9},
+ {id:"sawmill",lat:36.88306,lng:-118.36444,wq:"Sawmill Pass",approx:0,name:"Sawmill Pass",where:"Division Creek · Independence",rt:"~21 mi",gain:"~6,700 ft",elev:"11,309 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.alltrails.com/trail/us/california/sawmill-pass-trail",week:19,d:6,len:21,ns:8},
+ {id:"shepherd",lat:36.67243,lng:-118.34454,wq:"Shepherd Pass",approx:0,name:"Shepherd Pass",where:"Symmes Creek · Independence",rt:"~21.6 mi",gain:"~6,800 ft",elev:"12,027 ft",diff:"Very Hard",cls:"p-brutal",link:"https://www.hikingproject.com/trail/7116808/shepherd-pass-out-and-back",week:20,d:6,len:21.6,ns:11}
 ];
 
 const PEAKS=[
@@ -290,38 +316,70 @@ const PEAKS=[
 
 const KEY="ts395_v1";
 let state={};
-try{ state=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ state={}; }
-function persist(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); document.getElementById('saveTag').textContent="Saved in this browser \u2713"; }catch(e){ document.getElementById('saveTag').textContent="(Progress won't persist in this preview — it will once hosted.)"; } }
+try{
+  state=JSON.parse(localStorage.getItem(KEY))||{};
+  Object.keys(state).forEach(function(k){if(typeof state[k]==="boolean")state[k]={done:state[k],date:"",notes:""};});
+}catch(e){ state={}; }
+function s(id){if(!state[id]||typeof state[id]!=="object")state[id]={done:!!state[id],date:"",notes:""};return state[id];}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));document.getElementById("saveTag").textContent="Saved ✓";}catch(e){document.getElementById("saveTag").textContent="(Saves once hosted)";}}
+function fmtDate(d){if(!d)return "";var p=d.split("-"),mn=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return mn[+p[1]-1]+" "+p[2]+", "+p[0];}
+function escHtml(t){return (t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function logDate(el,id){s(id).date=el.value;persist();var e2=el.closest(".item").querySelector(".ldt");if(e2)e2.textContent=el.value?"📅 "+fmtDate(el.value):"";}
+function logNote(el,id){s(id).notes=el.value;persist();var e2=el.closest(".item").querySelector(".lnt");if(e2){var n=el.value;e2.textContent=n?"“"+n.substring(0,55)+(n.length>55?"…":"")+"”":"";;}}
 
 function passRow(p,showWeek){
-  const done=!!state[p.id];
-  return `<div class="item ${done?'done':''}" data-id="${p.id}">
-    <input type="checkbox" class="chk" ${done?'checked':''} aria-label="${p.name} crossed">
-    <div class="mid">
-      ${showWeek?`<span class="week">Week ${p.week}</span><br>`:''}
-      <span class="name">${p.name}</span>
-      <div class="where">${p.where}</div>
-      <div class="stats"><span><b>${p.rt}</b> rt</span><span><b>${p.gain}</b> gain</span><span>top <b>${p.elev}</b></span></div>
-    </div>
-    <div class="right">
-      <span class="pill ${p.cls}">${p.diff}</span>
-      <a class="go" href="${p.link}" target="_blank" rel="noopener">Trail</a>
-    </div>
-  </div>`;
+  var st=s(p.id),done=st.done,d=st.date||"",n=st.notes||"";
+  var ct="https://caltopo.com/map.html#ll="+p.lat+","+p.lng+"&z=14&b=mbt";
+  var wl="https://www.wikiloc.com/trails/search?q="+encodeURIComponent(p.wq);
+  var L='<button class="log-toggle">✎ Log date &amp; notes<\/button>'+
+    '<div class="log-panel">'+
+      '<div class="log-field"><label>Date crossed<\/label>'+
+      '<input type="date" class="log-date" value="'+d+'"><\/div>'+
+      '<div class="log-field"><label>Notes<\/label>'+
+      '<textarea class="log-notes" rows="3" placeholder="Conditions, companions, how it felt...">'+escHtml(n)+'<\/textarea><\/div>'+
+    '<\/div>';
+  return '<div class="item '+(done?'done ':'')+'" data-id="'+p.id+'">'+
+    '<input type="checkbox" class="chk" '+(done?'checked ':'')+' aria-label="'+p.name+' crossed">'+
+    '<div class="mid">'+
+      (showWeek?'<span class="week">Week '+p.week+'<\/span><br>':'')+
+      '<span class="name">'+p.name+'<\/span>'+
+      '<div class="where">'+p.where+'<\/div>'+
+      '<div class="stats"><span><b>'+p.rt+'<\/b> rt<\/span><span><b>'+p.gain+'<\/b> gain<\/span><span>top <b>'+p.elev+'<\/b><\/span><\/div>'+
+      '<div class="log-meta">'+
+        '<span class="ldt">'+(d?"📅 "+fmtDate(d):'')+
+        '<\/span><span class="lnt">'+(n?"“"+n.substring(0,55)+(n.length>55?"…":"")+"”":'')+
+      '<\/span><\/div>'+
+      '<div class="links">'+
+        '<a class="go" href="'+p.link+'" target="_blank" rel="noopener">AllTrails<\/a>'+
+        '<a class="go gl" href="'+wl+'" target="_blank" rel="noopener">Wikiloc GPX<\/a>'+
+        '<a class="go gc" href="'+ct+'" target="_blank" rel="noopener" title="'+(p.approx?"Approx — verify on topo":"USGS-verified")+'">CalTopo'+(p.approx?' ≈':'')+'<\/a>'+
+      '<\/div>'+L+
+    '<\/div>'+
+    '<div class="right"><span class="pill '+p.cls+'">'+p.diff+'<\/span><\/div>'+
+  '<\/div>';
 }
 function peakRow(p){
-  const done=!!state[p.id];
-  return `<div class="item ${done?'done':''}" data-id="${p.id}">
-    <input type="checkbox" class="chk" ${done?'checked':''} aria-label="${p.name} summited">
-    <div class="mid">
-      <span class="name">${p.name}</span>
-      <div class="where">${p.where}</div>
-      <div class="stats"><span><b>${p.elev.toLocaleString()} ft</b></span><span>${p.info}</span></div>
-    </div>
-    <div class="right">
-      <span class="pill ${p.cls}">${p.clsLabel}</span>
-    </div>
-  </div>`;
+  var st=s(p.id),done=st.done,d=st.date||"",n=st.notes||"";
+  var L='<button class="log-toggle">✎ Log date &amp; notes<\/button>'+
+    '<div class="log-panel">'+
+      '<div class="log-field"><label>Date summited<\/label>'+
+      '<input type="date" class="log-date" value="'+d+'"><\/div>'+
+      '<div class="log-field"><label>Notes<\/label>'+
+      '<textarea class="log-notes" rows="3" placeholder="Route, conditions, summit partners...">'+escHtml(n)+'<\/textarea><\/div>'+
+    '<\/div>';
+  return '<div class="item '+(done?'done ':'')+'" data-id="'+p.id+'">'+
+    '<input type="checkbox" class="chk" '+(done?'checked ':'')+' aria-label="'+p.name+' summited">'+
+    '<div class="mid">'+
+      '<span class="name">'+p.name+'<\/span>'+
+      '<div class="where">'+p.where+'<\/div>'+
+      '<div class="stats"><span><b>'+p.elev.toLocaleString()+' ft<\/b><\/span><span>'+p.info+'<\/span><\/div>'+
+      '<div class="log-meta">'+
+        '<span class="ldt">'+(d?"📅 "+fmtDate(d):'')+
+        '<\/span><span class="lnt">'+(n?"“"+n.substring(0,55)+(n.length>55?"…":"")+"”":'')+
+      '<\/span><\/div>'+L+
+    '<\/div>'+
+    '<div class="right"><span class="pill '+p.cls+'">'+p.clsLabel+'<\/span><\/div>'+
+  '<\/div>';
 }
 
 let passMode="week";
@@ -349,8 +407,8 @@ function renderPeaks(){
 }
 
 function updateMeters(){
-  const pc=PASSES.filter(p=>state[p.id]).length;
-  const kc=PEAKS.filter(p=>state[p.id]).length;
+  const pc=PASSES.filter(p=>s(p.id).done).length;
+  const kc=PEAKS.filter(p=>s(p.id).done).length;
   document.getElementById('pCount').textContent=pc;
   document.getElementById('kCount').textContent=kc;
   document.getElementById('pBar').style.width=(pc/PASSES.length*100)+"%";
@@ -360,9 +418,32 @@ function updateMeters(){
 document.addEventListener('change',e=>{
   if(e.target.classList.contains('chk')){
     const id=e.target.closest('.item').dataset.id;
-    state[id]=e.target.checked;
+    s(id).done=e.target.checked;
     e.target.closest('.item').classList.toggle('done',e.target.checked);
     persist(); updateMeters();
+  }
+});
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('log-toggle')){
+    const panel=e.target.closest('.item').querySelector('.log-panel');
+    const open=panel.classList.toggle('open');
+    e.target.textContent=open?'× Close':'✎ Log date & notes';
+  }
+});
+document.addEventListener('change',e=>{
+  if(e.target.classList.contains('log-date')){
+    const id=e.target.closest('[data-id]').dataset.id;
+    s(id).date=e.target.value; persist();
+    const el=e.target.closest('.item').querySelector('.ldt');
+    if(el)el.textContent=e.target.value?'📅 '+fmtDate(e.target.value):'';
+  }
+});
+document.addEventListener('input',e=>{
+  if(e.target.classList.contains('log-notes')){
+    const id=e.target.closest('[data-id]').dataset.id;
+    const n=e.target.value; s(id).notes=n; persist();
+    const el=e.target.closest('.item').querySelector('.lnt');
+    if(el)el.textContent=n?'“'+n.substring(0,55)+(n.length>55?'…':'')+'”':'';
   }
 });
 document.getElementById('passSort').addEventListener('click',e=>{
@@ -378,7 +459,7 @@ document.getElementById('peakSort').addEventListener('click',e=>{
   renderPeaks();
 });
 document.getElementById('resetBtn').addEventListener('click',()=>{
-  if(confirm("Clear every check?")){ state={}; persist(); renderPasses(); renderPeaks(); updateMeters(); }
+  if(confirm("Clear all checks, dates and notes?")){ state={}; persist(); renderPasses(); renderPeaks(); updateMeters(); }
 });
 
 renderPasses(); renderPeaks(); updateMeters();

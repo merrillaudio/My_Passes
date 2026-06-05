@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eastern Sierra 395 — Trail Map</title>
+<meta name="theme-color" content="#15191e">
+<link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Spectral:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--granite:#15191e;--card:#1d232a;--edge:#2c343d;--ink:#ece6da;--soft:#a9a799;--alpen:#dd8a45;--glacier:#6fb3b8;--brutal:#c0392b;}
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{font-family:'Spectral',serif;background:var(--granite);color:var(--ink);overflow:hidden}
+  #map{position:absolute;inset:0;background:var(--granite)}
+  .panel{position:absolute;z-index:1000;background:rgba(21,25,30,.92);border:1px solid var(--edge);border-radius:12px;backdrop-filter:blur(6px)}
+  .head{top:14px;left:14px;right:14px;max-width:440px;padding:14px 16px}
+  .head h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;line-height:1.1}
+  .head h1 b{color:var(--alpen)}
+  .head p{font-size:.82rem;color:var(--soft);font-weight:300;margin-top:5px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+  .actions a{font-size:.78rem;text-decoration:none;color:var(--ink);border:1px solid var(--edge);border-radius:18px;padding:6px 12px;transition:.18s}
+  .actions a:hover{border-color:var(--alpen)}
+  .actions a.dl{color:var(--glacier);border-color:rgba(111,179,184,.45)}
+  .legend{bottom:16px;left:14px;padding:11px 14px;font-size:.78rem;color:var(--soft)}
+  .legend .row{display:flex;align-items:center;gap:8px;margin:3px 0}
+  .dot{width:13px;height:13px;border-radius:50%;border:2px solid #fff;flex:none}
+  .leaflet-popup-content-wrapper{background:var(--card);color:var(--ink);border-radius:10px;border:1px solid var(--edge)}
+  .leaflet-popup-tip{background:var(--card);border:1px solid var(--edge)}
+  .leaflet-popup-content{margin:12px 14px;font-family:'Spectral',serif}
+  .pop h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;margin-bottom:3px}
+  .pop .meta{font-size:.82rem;color:var(--soft);margin-bottom:8px}
+  .pop .warn{color:#e8a499;font-size:.78rem;margin-bottom:8px}
+  .pop a{color:var(--glacier);font-size:.84rem;display:inline-block;margin-right:10px;text-decoration:none;border-bottom:1px solid transparent}
+  .pop a:hover{border-color:var(--glacier)}
+  .pop a.at{color:var(--alpen)}
+  .leaflet-bar a{background:var(--card);color:var(--ink);border-bottom-color:var(--edge)}
+  .leaflet-bar a:hover{background:#262d35}
+  .leaflet-control-attribution{background:rgba(21,25,30,.7)!important;color:#888!important}
+  .leaflet-control-attribution a{color:#aaa!important}
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="panel head">
+  <h1>Eastern Sierra <b>395</b> — Passes &amp; Trailheads</h1>
+  <p>13 crest passes and 5 verified trailheads. Tap a pin for stats, GPX, and a CalTopo hand-off. Amber = USGS-verified; red = approximate (confirm the saddle on the topo).</p>
+  <div class="actions">
+    <a href="./index.html">‹ Checklist</a>
+    <a class="dl" href="./eastern-sierra-395-passes.geojson" download>⤓ GeoJSON for CalTopo</a>
+  </div>
+</div>
+
+<div class="panel legend">
+  <div class="row"><span class="dot" style="background:#dd8a45"></span> Pass — USGS verified</div>
+  <div class="row"><span class="dot" style="background:#c0392b"></span> Pass — approximate</div>
+  <div class="row"><span class="dot" style="background:#2f9e6f"></span> Trailhead</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const PASSES=[
+ {n:"Cottonwood Pass",lat:36.45299,lng:-118.21509,el:"11,128 ft",d:"Easy",s:"~7 mi RT · ~1,200 ft · TH Horseshoe Meadows",at:"https://www.alltrails.com/trail/us/california/cottonwood-pass-new-army-pass-loop",wq:"Cottonwood Pass Sierra",ap:0},
+ {n:"New Army Pass",lat:36.49021,lng:-118.23981,el:"12,178 ft",d:"Hard",s:"~15 mi RT · ~2,300 ft · TH Cottonwood Lakes",at:"https://www.alltrails.com/trail/us/california/cottonwood-lake-and-long-lake-via-cottonwood-lakes-and-new-army-pass-trail",wq:"New Army Pass",ap:0},
+ {n:"Shepherd Pass",lat:36.67243,lng:-118.34454,el:"12,027 ft",d:"Very Hard",s:"~21.6 mi RT · ~6,800 ft · TH Symmes Creek",at:"https://www.hikingproject.com/trail/7116808/shepherd-pass-out-and-back",wq:"Shepherd Pass",ap:0},
+ {n:"Kearsarge Pass",lat:36.77260,lng:-118.37625,el:"11,709 ft",d:"Moderate",s:"~9.6 mi RT · ~2,660 ft · TH Onion Valley",at:"https://www.alltrails.com/trail/us/california/kearsarge-pass-trail-to-kearsarge-lakes",wq:"Kearsarge Pass",ap:0},
+ {n:"Sawmill Pass",lat:36.88306,lng:-118.36444,el:"11,309 ft",d:"Very Hard",s:"~21 mi RT · ~6,700 ft · TH Division Creek",at:"https://www.alltrails.com/trail/us/california/sawmill-pass-trail",wq:"Sawmill Pass",ap:0},
+ {n:"Taboose Pass",lat:36.98472,lng:-118.41389,el:"11,417 ft",d:"Very Hard",s:"~16 mi RT · ~6,000 ft · TH Aberdeen",at:"https://www.alltrails.com/trail/us/california/taboose-pass-to-cardinal-mountain",wq:"Taboose Pass",ap:0},
+ {n:"Bishop Pass",lat:37.11466,lng:-118.54483,el:"11,972 ft",d:"Mod–Hard",s:"~12 mi RT · ~2,150 ft · TH South Lake",at:"https://www.alltrails.com/trail/us/california/bishop-pass-trail",wq:"Bishop Pass",ap:0},
+ {n:"Piute Pass",lat:37.23910,lng:-118.68400,el:"11,423 ft",d:"Moderate",s:"~9.6 mi RT · ~2,078 ft · TH North Lake",at:"https://www.alltrails.com/trail/us/california/piute-pass-trail",wq:"Piute Pass",ap:0},
+ {n:"Mono Pass (Rock Creek)",lat:37.42493,lng:-118.77262,el:"12,073 ft",d:"Mod–Hard",s:"~9 mi RT · ~2,280 ft · TH Mosquito Flat",at:"https://www.alltrails.com/trail/us/california/mono-pass-from-mosquito-flat-trailhead",wq:"Mono Pass Rock Creek",ap:0},
+ {n:"Morgan Pass",lat:37.41260,lng:-118.73890,el:"~11,100 ft",d:"Easy–Mod",s:"~8–9 mi RT · ~1,000–1,600 ft · TH Mosquito Flat",at:"https://www.alltrails.com/trail/us/california/mosquito-flat-to-morgan-lakes",wq:"Morgan Pass Little Lakes Valley",ap:1},
+ {n:"Duck Pass",lat:37.52500,lng:-119.00130,el:"~10,790 ft",d:"Moderate",s:"~8 mi RT · ~1,680 ft · TH Coldwater CG",at:"https://www.alltrails.com/trail/us/california/duck-lake-via-emerald-lake-trail",wq:"Duck Pass Mammoth",ap:1},
+ {n:"Baxter Pass",lat:36.84900,lng:-118.35800,el:"~12,300 ft",d:"Very Hard",s:"~16 mi RT · ~6,300 ft · TH Oak Creek · unmaintained",at:"https://www.mountainproject.com/area/114076816/10-taboose-sawmill-baxter-passes",wq:"Baxter Pass",ap:1},
+ {n:"Burro / Summit Pass",lat:38.04550,lng:-119.27300,el:"~11,120 ft",d:"Moderate",s:"5.6–10 mi RT · TH Virginia Lakes",at:"https://www.alltrails.com/trail/us/california/virginia-lakes-trail",wq:"Virginia Lakes Summit Pass",ap:1},,
+
+ // Yosemite & northern extensions
+ {n:"Mono Pass (Yosemite)",lat:37.855333,lng:-119.213306,el:"10,597 ft",d:"Easy–Mod",s:"~8 mi RT · ~1,130 ft · TH Hwy 120 (Yosemite fee)",at:"https://www.alltrails.com/trail/us/california/mono-pass-trail",wq:"Mono Pass Yosemite Bloody Canyon",ap:0},
+ {n:"Donohue Pass",lat:37.760208,lng:-119.248480,el:"11,066 ft",d:"Hard",s:"~25 mi RT · ~2,456 ft · TH Tuolumne Meadows (JMT/PCT)",at:"https://www.alltrails.com/explore?q=Donohue+Pass+Tuolumne",wq:"Donohue Pass JMT Tuolumne",ap:0},
+ {n:"Parker Pass",lat:37.848000,lng:-119.209000,el:"~12,100 ft",d:"Hard",s:"~10 mi RT · ~2,900 ft · TH Mono Pass Trailhead",at:"https://www.alltrails.com/trail/us/california/alger-lakes-via-mono-pass-and-parker-pass-trails",wq:"Parker Pass Yosemite",ap:1},
+ {n:"Koip Peak Pass",lat:37.835000,lng:-119.223000,el:"~12,979 ft",d:"Hard",s:"~18 mi RT · ~4,084 ft · TH Mono Pass Trailhead",at:"https://www.alltrails.com/trail/us/california/koip-peak-trail",wq:"Koip Peak Pass June Lake",ap:1},
+ {n:"Mammoth Pass",lat:37.614000,lng:-119.041000,el:"~9,350 ft",d:"Easy",s:"~4 mi RT · ~600 ft · TH Horseshoe Lake",at:"https://www.alltrails.com/explore?q=Mammoth+Pass+Horseshoe+Lake",wq:"Mammoth Pass Horseshoe Lake",ap:1},
+ {n:"Island Pass",lat:37.714000,lng:-119.112000,el:"~10,203 ft",d:"Moderate",s:"~14 mi RT · ~2,200 ft · TH Agnew Meadows",at:"https://www.alltrails.com/explore?q=Island+Pass+Agnew+Meadows",wq:"Island Pass Agnew Meadows JMT",ap:1},
+ {n:"McGee Pass",lat:37.558000,lng:-118.907000,el:"11,895 ft",d:"Hard",s:"~22 mi RT · ~4,000 ft · TH McGee Creek",at:"https://www.alltrails.com/trail/us/california/mammoth-lakes-to-mcgee-creek-via-duck-and-mcgee-pass",wq:"McGee Pass McGee Creek",ap:1},
+];
+const THS=[
+ {n:"Symmes Creek TH (Shepherd Pass)",lat:36.72731,lng:-118.27890,el:"6,302 ft"},
+ {n:"Mosquito Flat TH (Mono / Morgan)",lat:37.43510,lng:-118.74720,el:"10,236 ft"},
+ {n:"Horseshoe Meadows TH (Cottonwood)",lat:36.44834,lng:-118.17065,el:"10,000 ft"},
+ {n:"Cottonwood Lakes TH (New Army)",lat:36.45320,lng:-118.16990,el:"10,040 ft"},
+ {n:"Oak Creek TH (Baxter Pass)",lat:36.84485,lng:-118.29763,el:"6,037 ft"},
+];
+
+const topo=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenTopoMap (CC-BY-SA), © OpenStreetMap'});
+const imagery=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Imagery © Esri'});
+
+const map=L.map('map',{layers:[topo],zoomControl:true});
+L.control.layers({"Topographic":topo,"Satellite":imagery},null,{position:'topright'}).addTo(map);
+
+function passMarker(p){
+  const color=p.ap?'#c0392b':'#dd8a45';
+  const m=L.circleMarker([p.lat,p.lng],{radius:8,color:'#fff',weight:2,fillColor:color,fillOpacity:.95});
+  const caltopo=`https://caltopo.com/map.html#ll=${p.lat},${p.lng}&z=14&b=mbt`;
+  const wikiloc=`https://www.wikiloc.com/trails/search?q=${encodeURIComponent(p.wq)}`;
+  m.bindPopup(`<div class="pop"><h3>${p.n}</h3>
+    <div class="meta">${p.d} · top ${p.el}<br>${p.s}</div>
+    ${p.ap?'<div class="warn">≈ Approximate location — confirm the saddle on the topo.</div>':''}
+    <a class="at" href="${p.at}" target="_blank" rel="noopener">AllTrails ↗</a>
+    <a href="${wikiloc}" target="_blank" rel="noopener">Wikiloc GPX ↗</a>
+    <a href="${caltopo}" target="_blank" rel="noopener">Open in CalTopo ↗</a></div>`);
+  m.bindTooltip(p.n,{direction:'top',offset:[0,-8]});
+  return m;
+}
+function thMarker(t){
+  const m=L.circleMarker([t.lat,t.lng],{radius:6,color:'#fff',weight:2,fillColor:'#2f9e6f',fillOpacity:.95});
+  const caltopo=`https://caltopo.com/map.html#ll=${t.lat},${t.lng}&z=14&b=mbt`;
+  m.bindPopup(`<div class="pop"><h3>${t.n}</h3><div class="meta">Trailhead · ${t.el}</div>
+    <a href="${caltopo}" target="_blank" rel="noopener">Open in CalTopo ↗</a></div>`);
+  m.bindTooltip(t.n,{direction:'top',offset:[0,-8]});
+  return m;
+}
+
+const group=L.featureGroup();
+PASSES.forEach(p=>passMarker(p).addTo(group));
+THS.forEach(t=>thMarker(t).addTo(group));
+group.addTo(map);
+map.fitBounds(group.getBounds().pad(0.12));
+</script>
+</body>
+</html>
