@@ -340,7 +340,7 @@ function passRow(p,showWeek){
   return '<div class="item '+(done?'done ':'')+'" data-id="'+p.id+'">'+
     '<input type="checkbox" class="chk" '+(done?'checked ':'')+' aria-label="'+p.name+' crossed">'+
     '<div class="mid">'+
-      (showWeek?'<span class="week">Week '+p.week+'<\/span><br>':'')+
+      ''+
       '<span class="name">'+p.name+'<\/span>'+
       '<div class="where">'+p.where+'<\/div>'+
       '<div class="stats"><span><b>'+p.rt+'<\/b> rt<\/span><span><b>'+p.gain+'<\/b> gain<\/span><span>top <b>'+p.elev+'<\/b><\/span><\/div>'+
