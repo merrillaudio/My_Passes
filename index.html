@@ -193,7 +193,27 @@
   .log-meta{display:flex;flex-direction:column;gap:2px;margin-top:5px;min-height:0}
   .ldt{font-size:.79rem;color:var(--alpenglow);font-style:italic}
   .lnt{font-size:.79rem;color:var(--ink-soft);font-style:italic}
+
+  /* CalTopo bar */
+  .ct-bar{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--card-edge);border-radius:10px;padding:12px 16px;margin:0 0 16px;flex-wrap:wrap}
+  .ct-label{font-size:.78rem;color:var(--ink-faint);white-space:nowrap;letter-spacing:.03em}
+  .ct-input{flex:1;min-width:200px;background:var(--granite-2);color:var(--ink);border:1px solid var(--card-edge);border-radius:6px;padding:7px 11px;font-size:.88rem;font-family:'Spectral',serif}
+  .ct-input:focus{outline:none;border-color:var(--alpenglow)}
+  .ct-input::placeholder{color:var(--ink-faint)}
+  .ct-open{background:var(--alpenglow);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:.85rem;font-family:'Spectral',serif;font-style:italic;text-decoration:none;white-space:nowrap;transition:.15s}
+  .ct-open:hover{opacity:.85}
+  /* Photo elements */
+  .photo-btn{font-family:'Spectral',serif;font-style:italic;font-size:.82rem;background:transparent;border:1px dashed var(--card-edge);color:var(--ink-soft);cursor:pointer;border-radius:6px;padding:6px 12px;transition:.15s}
+  .photo-btn:hover{border-color:var(--alpenglow);color:var(--alpenglow)}
+  .photo-thumb{display:block;max-width:100%;max-height:220px;border-radius:8px;margin-bottom:7px;object-fit:cover}
+  .photo-gps{display:block;font-size:.75rem;color:var(--ink-soft);margin-bottom:5px;font-style:italic}
+  .photo-gps.no-gps{color:var(--ink-faint)}
+  .photo-ct-link{color:var(--alpenglow);text-decoration:none}
+  .photo-ct-link:hover{text-decoration:underline}
+  .photo-rm{font-family:'Spectral',serif;font-size:.75rem;background:transparent;border:none;color:var(--ink-faint);cursor:pointer;padding:2px 0}
+  .photo-rm:hover{color:#e55}
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/lite.umd.js"></script>
 </head>
 <body>
 <div class="topo" aria-hidden="true">
@@ -221,6 +241,12 @@
       <polyline points="0,58 90,30 150,42 230,8 310,38 380,20 470,46 560,14 640,40 720,24 810,50 880,28 950,44 1000,34" fill="none" stroke="#dd8a45" stroke-width="1.4" opacity="0.7"/>
     </svg>
   </header>
+
+  <div class="ct-bar" id="ctBar">
+    <span class="ct-label">📍 Your CalTopo map</span>
+    <input id="ctUrl" type="url" class="ct-input" placeholder="https://caltopo.com/m/XXXX  — paste your saved map URL" spellcheck="false" autocomplete="off">
+    <a id="ctBtn" class="ct-open" href="#" target="_blank" rel="noopener">Open ↗</a>
+  </div>
 
   <div class="dash">
     <div class="meter passes">
@@ -330,7 +356,6 @@ function logNote(el,id){s(id).notes=el.value;persist();var e2=el.closest(".item"
 function passRow(p,showWeek){
   var st=s(p.id),done=st.done,d=st.date||"",n=st.notes||"";
   var ct="https://caltopo.com/map.html#ll="+p.lat+","+p.lng+"&z=14&b=mbt";
-  var wl="https://www.wikiloc.com/trails/search?q="+encodeURIComponent(p.wq);
   var L='<button class="log-toggle">✎ Log date &amp; notes<\/button>'+
     '<div class="log-panel">'+
       '<div class="log-field"><label>Date crossed<\/label>'+
@@ -351,7 +376,6 @@ function passRow(p,showWeek){
       '<\/span><\/div>'+
       '<div class="links">'+
         '<a class="go" href="'+p.link+'" target="_blank" rel="noopener">AllTrails<\/a>'+
-        '<a class="go gl" href="'+wl+'" target="_blank" rel="noopener">Wikiloc GPX<\/a>'+
         '<a class="go gc" href="'+ct+'" target="_blank" rel="noopener" title="'+(p.approx?"Approx — verify on topo":"USGS-verified")+'">CalTopo'+(p.approx?' ≈':'')+'<\/a>'+
       '<\/div>'+L+
     '<\/div>'+
@@ -390,6 +414,7 @@ function renderPasses(){
   else if(passMode==="ns") arr.sort((a,b)=>a.ns-b.ns);
   else arr.sort((a,b)=>a.week-b.week);
   document.getElementById('passList').innerHTML=arr.map(p=>passRow(p,passMode==="week")).join('');
+  refreshPhotos();
 }
 let peakMode="tier";
 const tierNames={1:"Walk-ups \u2014 Class 1\u20132",2:"Scrambles \u2014 Class 2\u20134",3:"Technical \u2014 Class 4\u20135 (rope up)"};
@@ -404,6 +429,7 @@ function renderPeaks(){
     html=[...PEAKS].sort((a,b)=>b.elev-a.elev).map(peakRow).join('');
   }
   document.getElementById('peakList').innerHTML=html;
+  refreshPhotos();
 }
 
 function updateMeters(){
